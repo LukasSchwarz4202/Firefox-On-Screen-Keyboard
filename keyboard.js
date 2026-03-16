@@ -1,9 +1,10 @@
 /*
  FxKeyboard improved
- Version: 0.0.1
- Author:  Travis Fitzgerald
- Date:    23 March 2021
- Purpose: A virtual keyboard for Firefox
+ Version:  1.0.0
+ Author:   Travis Fitzgerald
+ Date:     23 March 2021
+ Modified: 16 March 2026 by Lukas Schwarz
+ Purpose:  A virtual keyboard for Firefox
  */
 
 const storageData = browser.storage.local.get();
@@ -124,7 +125,7 @@ var FxKeyboardEn = JSON.stringify({
     [
       [{ width: 2 }],
       [{ label: " ", flex: 1 }], // space
-      [{ label: "Alt Gr", width: 2, special: "altgr" }],
+      [{ label: "aGr", width: 2, special: "altgr" }],
       [],
       [{ label: "✓" }],
       [{ label: "✖" }],
@@ -212,7 +213,7 @@ var FxKeyboardDe = JSON.stringify({
     [
       [{ width: 2 }],
       [{ label: " ", flex: 1 }], // space
-      [{ label: "Alt Gr", width: 2, special: "altgr" }],
+      [{ label: "aGr", width: 2, special: "altgr" }],
       [],
       [{ label: "✓" }],
       [{ label: "✖" }],
@@ -257,7 +258,7 @@ var FxKeyboardFr = JSON.stringify({
       [],
       ["a", "A"],
       ["z", "Z"],
-      ["e", "E", ],
+      ["e", "E"],
       ["r", "R"],
       ["t", "T"],
       ["y", "Y"],
@@ -302,7 +303,7 @@ var FxKeyboardFr = JSON.stringify({
     [
       [{ width: 2 }],
       [{ label: " ", flex: 1 }], // space
-      [{ label: "Alt Gr", width: 2, special: "altgr" }],
+      [{ label: "aGr", width: 2, special: "altgr" }],
       [],
       [{ label: "✓" }],
       [{ label: "✖" }],
@@ -380,7 +381,7 @@ var fxKeyboard = {
             xpath: this.hierarchy.pathInMaster,
             uri: this.settings.startingURL,
           }),
-          "*"
+          "*",
         );
       } else {
         if (keyboard.style.display !== "block") {
@@ -392,7 +393,7 @@ var fxKeyboard = {
               : false
           ) {
             document.getElementById(
-              this.previousOSK
+              this.previousOSK,
             ).parentElement.style.display = "none";
           }
           keyboard.style.display = "block";
@@ -410,7 +411,7 @@ var fxKeyboard = {
             directive: "master",
             command: { input: this.activeOSK, state: open },
           }),
-          "*"
+          "*",
         );
       } else {
         keyboard.style.display = "none";
@@ -480,7 +481,7 @@ var fxKeyboard = {
         }
         fxKeyboard._setShiftLock();
       };
-    } else if (obj.label === "Alt Gr") {
+    } else if (obj.label === "aGr") {
       key.onmouseup = function () {
         if (fxKeyboard.state !== 3) {
           key.style.backgroundColor = "rgb(200,200,200)";
@@ -522,19 +523,19 @@ var fxKeyboard = {
         fxKeyboard.focusElement.value = fxKeyboard.oldValue;
         fxKeyboard.oldValue = null;
         fxKeyboard.focusElement.dispatchEvent(
-          new Event("keydown", { bubbles: true, cancelable: true })
+          new Event("keydown", { bubbles: true, cancelable: true }),
         );
         fxKeyboard.focusElement.dispatchEvent(
-          new Event("keypress", { bubbles: true, cancelable: true })
+          new Event("keypress", { bubbles: true, cancelable: true }),
         );
         fxKeyboard.focusElement.dispatchEvent(
-          new Event("keyup", { bubbles: true, cancelable: true })
+          new Event("keyup", { bubbles: true, cancelable: true }),
         );
         fxKeyboard.focusElement.dispatchEvent(
-          new Event("input", { bubbles: true, cancelable: true })
+          new Event("input", { bubbles: true, cancelable: true }),
         );
         fxKeyboard.focusElement.dispatchEvent(
-          new Event("change", { bubbles: true, cancelable: true })
+          new Event("change", { bubbles: true, cancelable: true }),
         );
         fxKeyboard.focusElement.blur();
         fxKeyboard._toggleOpen(false);
@@ -716,13 +717,13 @@ var fxKeyboard = {
           command: "sendKey",
           key: character,
         }),
-        "*"
+        "*",
       );
     } else {
       if (character == "←") {
         fxKeyboard.focusElement.value = fxKeyboard.focusElement.value.slice(
           0,
-          -1
+          -1,
         );
       } else if (
         typeof fxKeyboard.focusElement.maxLength === "undefined" ||
@@ -744,19 +745,19 @@ var fxKeyboard = {
       }
 
       fxKeyboard.focusElement.dispatchEvent(
-        new Event("keydown", { bubbles: true, cancelable: true })
+        new Event("keydown", { bubbles: true, cancelable: true }),
       );
       fxKeyboard.focusElement.dispatchEvent(
-        new Event("keypress", { bubbles: true, cancelable: true })
+        new Event("keypress", { bubbles: true, cancelable: true }),
       );
       fxKeyboard.focusElement.dispatchEvent(
-        new Event("keyup", { bubbles: true, cancelable: true })
+        new Event("keyup", { bubbles: true, cancelable: true }),
       );
       fxKeyboard.focusElement.dispatchEvent(
-        new Event("input", { bubbles: true, cancelable: true })
+        new Event("input", { bubbles: true, cancelable: true }),
       );
       fxKeyboard.focusElement.dispatchEvent(
-        new Event("change", { bubbles: true, cancelable: true })
+        new Event("change", { bubbles: true, cancelable: true }),
       );
     }
   },
@@ -843,7 +844,7 @@ var fxKeyboard = {
     }
     return key;
   },
-  
+
   insertKeyboard: function (inputType) {
     var background;
     var keyboard;
@@ -898,8 +899,8 @@ var fxKeyboard = {
       background.style.left = 0;
       background.style.zIndex = "9999999";
       background.style.display = "none"; //hidden on insert.
-      background.id = inputType+"-background";
-      
+      background.id = inputType + "-background";
+
       keyboard = document.createElement("div");
       keyboard.setAttribute("tabIndex", "-1");
       keyboard.style.maxWidth = max_width * this.settings.scale + "px";
@@ -1029,7 +1030,7 @@ browser.runtime.onMessage.addListener(function begin(message) {
           command: "ping",
           uri: fxKeyboard.settings.startingURL,
         }),
-        "*"
+        "*",
       );
     }
     if (
@@ -1084,21 +1085,21 @@ window.addEventListener(
             document.body,
             null,
             XPathResult.FIRST_ORDERED_NODE_TYPE,
-            null
+            null,
           ).singleNodeValue;
           if (fxKeyboard.hierarchy.slavedIFrame == null) {
             fxKeyboard.hierarchy.slavedIFrame = document.querySelector(
-              'iframe[src="' + msg.uri + '"]'
+              'iframe[src="' + msg.uri + '"]',
             );
             fxKeyboard.hierarchy.slavedIFrame.contentWindow.postMessage(
               JSON.stringify({
                 directive: "slave",
                 command: "updateXPath",
                 xpath: xpath.getXPathOfElement(
-                  fxKeyboard.hierarchy.slavedIFrame
+                  fxKeyboard.hierarchy.slavedIFrame,
                 ),
               }),
-              "*"
+              "*",
             );
           }
           fxKeyboard._toggleOpen(msg.command.state);
@@ -1115,13 +1116,13 @@ window.addEventListener(
               command: "initialize",
               xpath: xpath.getXPathOfElement(iframe),
             }),
-            "*"
+            "*",
           );
         }
       }
     }
   },
-  false
+  false,
 );
 
 document.addEventListener("mousedown", function load(clicked) {
@@ -1134,15 +1135,19 @@ document.addEventListener("mouseup", function load(clicked) {
   if (clicked.target.id.indexOf("fxkey") !== -1) {
     clicked.preventDefault();
   }
-  oskAction(clicked);
-});
-
-document.addEventListener("focusin", function load(clicked) {
-  if (clicked.target.id.indexOf("fxkey") !== -1) {
-    clicked.preventDefault();
+  if (fxKeyboard.focusElement === null) {
+    oskAction(clicked);
   }
   oskAction(clicked);
 });
+
+// DOES NOT WORK properly, moved code to mouseup-event
+// document.addEventListener("focusin", function load(clicked) {
+//   if (clicked.target.id.indexOf("fxkey") !== -1) {
+//     clicked.preventDefault();
+//   }
+//   oskAction(clicked);
+// });
 
 var textInputTypes = {
   input: "",
@@ -1186,6 +1191,9 @@ function oskAction(clicked) {
     fxKeyboard.lastPress !== "apply"
   ) {
     fxKeyboard.focusElement = document.activeElement;
+
+    console.log("HIER 0", fxKeyboard.focusElement);
+
     fxKeyboard._observeFocusElement();
     if (fxKeyboard.oldValue === null) {
       fxKeyboard.oldValue = fxKeyboard.focusElement.value;

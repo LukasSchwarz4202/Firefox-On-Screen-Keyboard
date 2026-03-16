@@ -7,9 +7,6 @@
     "48": "icon.svg",
     "96": "icon.svg"
   },
-  "background": {
-    "scripts": ["kb.js"]
-  },
   "content_scripts": [
     {
       "all_frames": true,
@@ -30,5 +27,14 @@
   "options_ui": {
     "page": "options/osk_settings.html",
     "browser_style": true
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "l.schwarz@ds-automotion.com",
+      "data_collection_permissions": {
+        "required": ["none"],
+        "optional": []
+      }
+    }
   }
 }
